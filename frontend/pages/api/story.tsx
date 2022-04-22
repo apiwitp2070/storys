@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { getMyId } from "./auth";
 
 const API_URL = "http://localhost:1337/api";
@@ -24,10 +25,55 @@ export const getStoryById = async (storyId: any) => {
   } = await axios.get(`${API_URL}/stories/${storyId}?populate=*`);
   return {
     id: data.id,
-    title: data.attributes.title,
-    plot: data.attributes.plot.data.map(({ id, attributes }: any) => ({
+    title: data?.attributes?.title,
+    plot: data?.attributes?.plots?.data?.map(({ id, attributes }: any) => ({
       id,
       category: attributes.category,
     })),
   };
+};
+
+export const addStory = async ({
+  title,
+}: any) => {
+  const token = Cookies.get('token');
+  const user = await getMyId();
+  await axios.post(
+    `${API_URL}/stories`,
+    {
+      data :{
+        title,
+        user: user.id,
+        createdBy: "",
+        updatedBy: "",
+      }
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export const editStory = async ({
+  storyId,
+  title,
+}: any) => {
+  const token = Cookies.get('token');
+  await axios.put(
+    `${API_URL}/stories/${storyId}`,
+    {
+      data :{
+        title,
+        createdBy: "",
+        updatedBy: "",
+      }
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 };

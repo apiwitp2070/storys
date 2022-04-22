@@ -16,12 +16,14 @@ const Header = () => {
   return (
     <div className='border-b px-4 py-4 text-right'>
       {user ? (
-        <div className="space-x-2 font-bold">
-          <span className="hover:text-blue-500 transition duration-100">
-            USER: {user.username}
-          </span>
+        <div className="space-x-2 font-semibold">
+          <Link href="/story/home">
+            <span className="hover:text-blue-500 transition duration-100">
+              USER: {user.username}
+            </span>
+          </Link>
           <span className="border-l border-gray-300" />
-          <button onClick={handleLogout} className="font-bold hover:text-blue-500 transition duration-100">
+          <button onClick={handleLogout} className="hover:text-blue-500 font-semibold transition duration-100">
             LOGOUT
           </button>
         </div>
