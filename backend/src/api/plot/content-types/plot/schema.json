@@ -19,6 +19,12 @@
       "type": "component",
       "repeatable": true,
       "component": "plot.plot"
+    },
+    "story": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::story.story",
+      "inversedBy": "plots"
     }
   }
 }
