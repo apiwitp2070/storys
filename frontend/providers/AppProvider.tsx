@@ -3,7 +3,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Cookie from 'js-cookie';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337/';
 
 // set backup default for isAuthenticated if none is provided in Provider
 const AppContext = React.createContext({
@@ -34,6 +34,7 @@ export const AppProvider = ({ children }: any ) => {
       },
     });
     if (!response.ok) {
+      console.log('not ok')
       Cookie.remove('token');
       setUser(null);
       return;

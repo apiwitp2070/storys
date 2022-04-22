@@ -28,7 +28,7 @@ export default function login() {
       console.error(error);
     }
     setLoading(false);
-    router.push('/');
+    router.push('/dashboard');
   };
 
   useEffect(() => {
