@@ -1,40 +1,35 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useAppContext } from '../providers/AppProvider';
-import { getPlots } from './api/plot';
-import { logout } from './api/auth';
-import Header from './components/Header'
+import { getStoryById } from '../../api/story';
+import Header from '../../components/Header'
 
-const ButtonStyle = "p-1 border border-black rounded w-3/5 mx-auto transition ease-out duration-300 hover:border-blue-600 hover:text-blue-600"
 const divStyle = 'border shadow-md rounded-md'
 const itemStyle = 'rounded border shadow-md mx-4 px-4 py-2'
 
 const Dashboard = () => {
-  const { user, setUser } = useAppContext();
   const router = useRouter();
-  const [plots, setPlots] = useState([]);
+  const [story, setStory] = useState<any>();
+  const [click, setClick] = useState(false);
 
   useEffect(() => {
-    async function fetchPlots() {
-      console.log('hello')
-      const res = await getPlots();
-      setPlots(res)
+    async function fetchDashboard() {
+      const { storyId } = router.query;
+      const res = await getStoryById(storyId);
+      setStory(res);
     }
-    fetchPlots();
-    console.log('fetch')
+    fetchDashboard();
   }, []);
-
-  const handleLogout = () => {
-    logout();
-    setUser(null);
-    router.push('/');
-  };
   
+  const handleClickPlot = async () => {
+    console.log('clicked')
+    setClick(!click);
+  }
+
   return (
     <div className='h-screen flex flex-col'>
       <Head>
-        <title>Storys</title>
+        <title>Storys | {story?.title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -51,17 +46,9 @@ const Dashboard = () => {
             </span>
           </div>
           <div className='flex flex-col space-y-2'>
-            {plots.map(({id, names, items}: any) => (
+            {story?.plot?.map(({id, category}: any) => (
               <div key={id} className={itemStyle}>
-                <p>{names}</p>
-                <div>
-                  {items.map(({id, itemName, desc}: any) => (
-                    <div key={id} className={itemStyle}>
-                      <p>{itemName}</p>
-                      <p>{desc}</p>
-                    </div>
-                  ))}
-                </div>
+                <p onClick={handleClickPlot}>{category}</p>
               </div>
             ))}
           </div>

@@ -21,19 +21,17 @@ export default function login() {
     setLoading(true);
     try {
       const user = await loginUser(email, password);
-      // set authed user in global context object
-      console.log(`user`, user);
       setUser(user);
     } catch (error) {
       console.error(error);
     }
     setLoading(false);
-    router.push('/dashboard');
+    router.push('/story/home');
   };
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/'); // redirect if you're already logged in
+      router.push('/story/home'); // redirect if you're already logged in
     }
   }, []);
 

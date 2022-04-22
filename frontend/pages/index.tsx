@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const ButtonStyle = "p-1 border border-black rounded w-3/5 mx-auto transition ease-out duration-300 hover:border-blue-600 hover:text-blue-600"
 
-const Home = () => {
+const Homepage = () => {
   return (
     <div>
       <Head>
@@ -30,4 +30,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Homepage

@@ -14,29 +14,25 @@ const Header = () => {
   };
 
   return (
-    <div className='border-b px-8 py-4 text-right'>
+    <div className='border-b px-4 py-4 text-right'>
       {user ? (
         <div className="space-x-2 font-bold">
-          <Link href='/dashboard'>
-            <a>
-              <span className="hover:opacity-70">
-                FYNSPACE ID: {user.username}
-              </span>
-            </a>
-          </Link>
+          <span className="hover:text-blue-500 transition duration-100">
+            USER: {user.username}
+          </span>
           <span className="border-l border-gray-300" />
-          <button onClick={handleLogout} className="font-bold hover:opacity-70">
-            Sign Out
+          <button onClick={handleLogout} className="font-bold hover:text-blue-500 transition duration-100">
+            LOGOUT
           </button>
         </div>
       ) : (
-        <div className="space-x-2 font-bold">
-          <Link href="/auth/register">
-            <span className="cursor-pointer hover:opacity-70">Sign Up</span>
+        <div className="space-x-2 font-semibold uppercase">
+          <Link href="/auth/login">
+            <span className="cursor-pointer hover:text-blue-500 transition duration-100">Login</span>
           </Link>
           <span className="border-l border-gray-300" />
-          <Link href="/auth/login">
-            <span className="cursor-pointer hover:opacity-70">Sign In</span>
+          <Link href="/auth/register">
+            <span className="cursor-pointer hover:text-blue-500 transition duration-100">Register</span>
           </Link>
         </div>
       )}

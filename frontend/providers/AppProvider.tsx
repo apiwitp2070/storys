@@ -34,7 +34,6 @@ export const AppProvider = ({ children }: any ) => {
       },
     });
     if (!response.ok) {
-      console.log('not ok')
       Cookie.remove('token');
       setUser(null);
       return;
