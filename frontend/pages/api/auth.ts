@@ -3,14 +3,14 @@
 import Cookie from 'js-cookie';
 import axios from 'axios';
 
-const API_URL = "http://localhost:1337";
+const API_URL = "http://localhost:1337/api";
 
 //register a new user
 export const registerUser = async (username: any, email: any, password: any) => {
   //prevent function from being ran on the server
   if (typeof window === 'undefined') return;
 
-  const response = await axios.post(`${API_URL}/api/auth/local/register`, {
+  const response = await axios.post(`${API_URL}/auth/local/register`, {
     username,
     email,
     password,
@@ -24,7 +24,7 @@ export const loginUser = async (identifier: any, password: any) => {
   //prevent function from being ran on the server
   if (typeof window === 'undefined') return;
 
-  const response = await axios.post(`${API_URL}/api/auth/local/`, {
+  const response = await axios.post(`${API_URL}/auth/local/`, {
     identifier,
     password,
   });

@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const API_URL = "http://localhost:1337/api";
+
 export async function getPlots () {
-  const response = await axios.get(`http://localhost:1337/api/plots?populate=*`);
+  const response = await axios.get(`${API_URL}/plots?populate=*`);
   console.log(response.data.data)
   return response.data.data.map(({ id, attributes }: any) => ({
     id,
