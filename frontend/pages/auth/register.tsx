@@ -101,7 +101,7 @@ export default function register() {
               <div>
                 <button
                   type="submit"
-                  className="p-1 border border-black bg-white rounded mx-auto block w-full transition ease-out duration-300 hover:bg-black hover:text-white"
+                  className="p-1 border border-black bg-white rounded mx-auto block w-full transition ease-out duration-100 hover:border-blue-600 hover:text-blue-600"
                 >
                   {loading ? 'Loading..' : 'Sign Up'}
                 </button>
