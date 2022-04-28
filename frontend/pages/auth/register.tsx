@@ -38,7 +38,7 @@ export default function register() {
     <div>
       <Head>
         <title>Register</title>
-        <link rel="icon" type="image/png" href="/fynspace-icon.png" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="mt-24 flex justify-center lg:mb-40 2xl:container 2xl:mx-auto">

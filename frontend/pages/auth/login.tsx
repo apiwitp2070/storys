@@ -38,8 +38,9 @@ export default function login() {
     <div>
       <Head>
         <title>Login</title>
-        <link rel="icon" type="image/png" href="/fynspace-icon.png" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
+      
       <div className="mt-24 flex justify-center lg:mb-48 2xl:container 2xl:mx-auto">
         <div className="w-4/5 md:w-3/5">
           <div className="justify-between lg:flex items-center">
