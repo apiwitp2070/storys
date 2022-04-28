@@ -1,18 +1,11 @@
 import Head from 'next/head'
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import BgGenerator from '../providers/ts/bg-gen';
+import Background from './components/Background';
 
 const ButtonStyle = "p-1 border border-black bg-white rounded w-3/5 mx-auto transition ease-out duration-300 hover:border-blue-600 hover:text-blue-600"
 
 const Homepage = () => {
-
-  const [bg, setBg] = useState('');
-
-  useEffect(() => {
-    BgGenerator(setBg);
-  }, []);
-
   return (
     <div>
       <Head>
@@ -20,7 +13,7 @@ const Homepage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className={`-z-50 absolute top-0 h-screen w-screen ${bg}`}/>
+      <Background/>
 
       <main>
         <div className='flex flex-col mt-48 py-12 w-4/5 md:w-2/5 mx-auto space-y-12 border rounded-md bg-white'>

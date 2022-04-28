@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { addStory, getUserStories } from '../api/story';
 import Header from '../components/Header';
 import Modal from '../components/Modal';
+import Background from '../components/Background';
 
 const Home = () => {
   const [stories, setStories] = useState([]);
@@ -16,7 +17,7 @@ const Home = () => {
 
   async function fetchStories() {
     const res = await getUserStories();
-    setStories(res)
+    setStories(res);
   }
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -40,6 +41,8 @@ const Home = () => {
       </Head>
 
       <Header/>
+
+      <Background/>
 
       <main className='my-4 place-self-center border rounded-md shadow-md w-2/5 h-full'>
         <div className='flex justify-between items-center border-b'>
