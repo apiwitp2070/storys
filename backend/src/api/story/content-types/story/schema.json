@@ -15,17 +15,17 @@
     "title": {
       "type": "string"
     },
-    "plots": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::plot.plot",
-      "mappedBy": "story"
-    },
     "user": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "stories"
+    },
+    "plots": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::plot.plot",
+      "mappedBy": "story"
     }
   }
 }

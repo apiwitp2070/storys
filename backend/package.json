@@ -11,22 +11,20 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@strapi/plugin-documentation": "^4.1.8",
-    "@strapi/plugin-i18n": "4.1.8",
-    "@strapi/plugin-users-permissions": "4.1.8",
-    "@strapi/strapi": "4.1.8",
-    "pg": "8.6.0",
-    "pg-connection-string": "^2.5.0"
+    "@strapi/strapi": "4.1.9",
+    "@strapi/plugin-users-permissions": "4.1.9",
+    "@strapi/plugin-i18n": "4.1.9",
+    "pg": "8.6.0"
   },
   "author": {
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "d3240ebf-b002-410a-a3fb-25b62ee69b5a"
+    "uuid": "4f9087fb-ca88-482d-a80a-b8eeec00e7ac"
   },
   "engines": {
-    "node": "14.17.6",
-    "npm": "6.14.15"
+    "node": ">=12.x.x <=16.x.x",
+    "npm": ">=6.0.0"
   },
   "license": "MIT"
 }
