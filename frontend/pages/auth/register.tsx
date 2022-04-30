@@ -31,7 +31,7 @@ export default function register() {
     }
 
     setLoading(false);
-    router.push('/');
+    router.push('/story/home');
   };
 
   return (
