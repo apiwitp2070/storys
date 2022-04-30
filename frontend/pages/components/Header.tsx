@@ -14,7 +14,7 @@ const Header = () => {
   };
 
   return (
-    <div className='border-b px-4 py-4 text-right'>
+    <div className='bg-white border-b px-4 py-4 text-right'>
       {user ? (
         <div className="space-x-2 font-semibold">
           <Link href="/story/home">
