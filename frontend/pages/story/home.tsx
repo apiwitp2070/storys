@@ -44,7 +44,7 @@ const Home = () => {
 
       <Background/>
 
-      <main className='my-4 place-self-center border rounded-md shadow-md w-2/5 h-full'>
+      <main className='my-4 place-self-center bg-white border rounded-md shadow-md w-2/5 h-full'>
         <div className='flex justify-between items-center border-b'>
           <p className='p-4 text-xl'>Stories</p>
           <span className='p-4'>

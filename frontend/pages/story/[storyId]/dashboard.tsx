@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { editStory, getStoryById } from '../../api/story';
+import Background from '../../components/Background';
 import Header from '../../components/Header'
 import Modal from '../../components/Modal';
 
@@ -48,6 +49,8 @@ const Dashboard = () => {
       </Head>
 
       <Header/>
+
+      <Background/>
 
       <div className='flex justify-between h-16 rounded border shadow-md mx-4 px-4 py-2'>
         <p className='py-2'>{story?.title}</p>
