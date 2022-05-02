@@ -4,7 +4,8 @@
   "info": {
     "singularName": "plot",
     "pluralName": "plots",
-    "displayName": "Plot"
+    "displayName": "Plot",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,12 +20,6 @@
       "type": "component",
       "repeatable": true,
       "component": "plot.item"
-    },
-    "itemName": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text"
     },
     "story": {
       "type": "relation",
