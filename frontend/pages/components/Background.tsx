@@ -17,7 +17,7 @@ const Background = () => {
     <div>
       <div className={`-z-50 transition-all duration-300 absolute top-0 h-screen w-screen ${BgList[BG.color]}`}/>
       <button 
-        className='rounded-full w-8 h-8 bg-white absolute top-20 left-4'
+        className='rounded-full w-8 h-8 bg-white absolute top-4 left-4'
         onClick={handleClickChangeBg}>
         <RefreshIcon className='w-2/3 mx-auto text-blue-500'/>
       </button>
