@@ -17,9 +17,13 @@ const Header = () => {
     <div className='bg-white border-b px-4 py-4 text-right'>
       {user ? (
         <div className="space-x-2 font-semibold">
+          <span>
+            USER: {user.username}
+          </span>
+          <span className="border-l border-gray-300" />
           <Link href="/story/home">
-            <span className="hover:text-blue-500 transition duration-100">
-              USER: {user.username}
+            <span className="cursor-pointer hover:text-blue-500 transition duration-100">
+              Home
             </span>
           </Link>
           <span className="border-l border-gray-300" />
