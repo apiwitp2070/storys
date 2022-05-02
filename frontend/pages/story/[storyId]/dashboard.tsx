@@ -2,22 +2,23 @@ import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { editStory, getStoryById } from '../../api/story';
-import { getPlotItemsById } from '../../api/plot';
+import { addPlot, getPlotItemsById } from '../../api/plot';
 import Background from '../../components/Background';
 import Header from '../../components/Header'
 import Modal from '../../components/Modal';
 import { ChevronRightIcon } from '@heroicons/react/solid';
 
 const divStyle = 'bg-white border shadow-md rounded-md';
-const divHeader = 'my-2 px-4 py-4 flex justify-between';
+const divHeader = 'my-2 px-4 py-4 flex justify-between font-semibold';
 const plotStyle = 'select-none cursor-pointer flex justify-between items-center border-b border-gray-300 px-4 py-2 transition hover:border-blue-500';
 const plotItem = 'select-none border border-gray-200 rounded m-2 px-4 py-2';
+const editButton = 'hover:text-blue-500 transition duration-300';
 
 const Dashboard = () => {
   const router = useRouter();
-  const [editModal, setShowEditModal] = useState(false);
-  const [showPlotItems, setShowPlotItems] = useState(false);
-  const [newTitle, setNewTitle] = useState('');
+  const [modal, setShowModal] = useState(0);
+  const [showPlotItems, setShowPlotItems] = useState(0);
+  const [newValue, setNewValue] = useState('');
   const [story, setStory] = useState<any>();
   const [plotItems, setPlotItems] = useState<any>(null);
 
@@ -35,24 +36,32 @@ const Dashboard = () => {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    handleEditStory(storyId);
+    if (modal == 1) handleEditStory(storyId);
+    else if (modal == 2) handleAddPlot();
   }
 
   const handleEditStory = async (storyId: any) => {
     await editStory({
       storyId: storyId,
-      title: newTitle
+      title: newValue
     });
-    setShowEditModal(false);
+    setShowModal(0);
+    fetchDashboard();
+  }
+
+  const handleAddPlot = async () => {
+    await addPlot({
+      category: newValue,
+      storyId: storyId
+    });
+    setShowModal(0);
     fetchDashboard();
   }
 
   const handleClickPlot = async (plotId: number) => {
-    if (!plotItems) {
       const res = await getPlotItemsById(plotId);
       setPlotItems(res);
-    }
-    setShowPlotItems(!showPlotItems);
+    setShowPlotItems(showPlotItems == plotId ? 0 : plotId);
   }
 
   return (
@@ -69,7 +78,7 @@ const Dashboard = () => {
       <div className='flex justify-between h-16 bg-white border shadow-md rounded mx-4 mt-4 px-4 py-2'>
         <p className='py-2'>{story?.title}</p>
         <span className='flex space-x-4'>
-          <button onClick={() => setShowEditModal(true)}>Edit</button>
+          <button className={editButton} onClick={() => setShowModal(1)}>Edit</button>
           <span className='border-l my-2'></span>
           <button>Delete</button>
         </span>
@@ -80,10 +89,7 @@ const Dashboard = () => {
         <div className={divStyle}>
           <div className={divHeader}>
             <p className='uppercase'>Plots</p>
-            <span className='space-x-4'>
-              <button>New</button>
-              <button>Edit</button>
-            </span>
+            <button className={editButton} onClick={() => setShowModal(2)}>New</button>
           </div>
           <div className='flex flex-col space-y-2'>
             {story?.plot?.map(({id, category}: any) => (
@@ -92,9 +98,9 @@ const Dashboard = () => {
                   <p>
                     {category}
                   </p>
-                  <ChevronRightIcon className={showPlotItems ? 'w-5 rotate-90 transition translate-y-0.5' : 'w-5 transition'}/>
+                  <ChevronRightIcon className={showPlotItems == id ? 'w-5 rotate-90 transition translate-y-0.5' : 'w-5 transition'}/>
                 </div>
-                {showPlotItems && plotItems?.items?.map(({id, itemName, description}: any) => (
+                {showPlotItems == id && plotItems?.items?.map(({id, itemName, description}: any) => (
                   <div key={id} className={plotItem}>
                     <p>{itemName}</p>
                     <p className='text-xs'>{description}</p>
@@ -108,35 +114,45 @@ const Dashboard = () => {
         <div className={divStyle}>
           <div className={divHeader}>
             <p className='uppercase'>Write</p>
-            <span className='space-x-4'>
-              <button>New</button>
-              <button>Edit</button>
-            </span>
+            <button className={editButton}>New</button>
           </div>
         </div>
 
         <div className={divStyle}>
           <div className={divHeader}>
             <p className='uppercase'>Organize</p>
-            <span className='space-x-4'>
-              <button>New</button>
-              <button>Edit</button>
-            </span>
+            <button className={editButton}>New</button>
           </div>
         </div>
       </main>
 
-      {editModal &&
+      {modal == 1 &&
         <Modal
-          title='Add new Story'
-          setShowModal={setShowEditModal}
+          title='Edit Story Title'
+          setShowModal={setShowModal}
           onConfirm={() => handleEditStory(storyId)}
         >
           <form onSubmit={(e) => handleFormSubmit(e)} className='flex'>
             <input
-              onChange={(e) => setNewTitle(e.target.value)}
+              onChange={(e) => setNewValue(e.target.value)}
               defaultValue={story?.title}
-              placeholder='Enter new story name'
+              placeholder='Enter new value'
+              className='w-full m-4 px-2 py-1 place-self-center border rounded-md'
+            />
+          </form>
+        </Modal>
+      }
+      
+      {modal == 2 &&
+        <Modal
+          title='Add new Plot'
+          setShowModal={setShowModal}
+          onConfirm={() => handleAddPlot()}
+        >
+          <form onSubmit={(e) => handleFormSubmit(e)} className='flex'>
+            <input
+              onChange={(e) => setNewValue(e.target.value)}
+              placeholder='Enter new plot category'
               className='w-full m-4 px-2 py-1 place-self-center border rounded-md'
             />
           </form>
