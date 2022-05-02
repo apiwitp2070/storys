@@ -18,9 +18,10 @@ export const getPlotItemsById = async (plotId: any) => {
   } = await axios.get(`${API_URL}/plots/${plotId}?populate=*`);
   return {
     id: data.id,
-    plot: data.attributes.plot.data.map(({ id, attributes }: any) => ({
+    items: data.attributes.items.map(({ id, itemName, description }: any) => ({
       id,
-      category: attributes.category,
+      itemName,
+      description
     })),
   };
 };
