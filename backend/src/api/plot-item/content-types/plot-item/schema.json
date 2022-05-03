@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "plot_items",
+  "info": {
+    "singularName": "plot-item",
+    "pluralName": "plot-items",
+    "displayName": "Plot Item",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "itemName": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "note": {
+      "type": "text"
+    },
+    "detail": {
+      "type": "richtext"
+    },
+    "plot": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::plot.plot",
+      "inversedBy": "plot_items"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "plot_items"
+    }
+  }
+}

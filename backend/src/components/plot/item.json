@@ -12,6 +12,17 @@
     },
     "description": {
       "type": "text"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag"
+    },
+    "detail": {
+      "type": "richtext"
+    },
+    "note": {
+      "type": "text"
     }
   }
 }

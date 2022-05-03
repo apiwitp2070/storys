@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tags",
+  "info": {
+    "singularName": "tag",
+    "pluralName": "tags",
+    "displayName": "Tag",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tag": {
+      "type": "string"
+    },
+    "plot_items": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::plot-item.plot-item",
+      "inversedBy": "tags"
+    }
+  }
+}

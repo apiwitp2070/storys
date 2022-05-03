@@ -15,17 +15,17 @@
     "category": {
       "type": "string"
     },
-    "items": {
-      "displayName": "Item",
-      "type": "component",
-      "repeatable": true,
-      "component": "plot.item"
-    },
     "story": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::story.story",
       "inversedBy": "plots"
+    },
+    "plot_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::plot-item.plot-item",
+      "mappedBy": "plot"
     }
   }
 }
