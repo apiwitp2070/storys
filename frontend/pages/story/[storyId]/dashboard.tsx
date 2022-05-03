@@ -2,22 +2,23 @@ import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { editStory, getStoryById } from '../../api/story';
-import { addPlot, getPlotItemsById } from '../../api/plot';
+import { addPlot, getPlotById } from '../../api/plot';
 import Background from '../../components/Background';
 import Header from '../../components/Header'
 import Modal from '../../components/Modal';
 import { ChevronRightIcon } from '@heroicons/react/solid';
+import Link from 'next/link';
 
 const divStyle = 'bg-white border shadow-md rounded-md';
 const divHeader = 'my-2 px-4 py-4 flex justify-between font-semibold';
-const plotStyle = 'select-none cursor-pointer flex justify-between items-center border-b border-gray-300 px-4 py-2 transition hover:border-blue-500';
+const plotStyle = 'select-none flex justify-between items-center border-b border-gray-300 px-4 py-2 transition hover:border-blue-500';
 const plotItem = 'select-none border border-gray-200 rounded m-2 px-4 py-2';
 const editButton = 'hover:text-blue-500 transition duration-300';
 
 const Dashboard = () => {
   const router = useRouter();
   const [modal, setShowModal] = useState(0);
-  const [showPlotItems, setShowPlotItems] = useState(0);
+  const [showPlotItems, setShowPlotItems] = useState({show: 0, plot: 0});
   const [newValue, setNewValue] = useState('');
   const [story, setStory] = useState<any>();
   const [plotItems, setPlotItems] = useState<any>(null);
@@ -59,9 +60,15 @@ const Dashboard = () => {
   }
 
   const handleClickPlot = async (plotId: number) => {
-      const res = await getPlotItemsById(plotId);
+    if (showPlotItems.plot != plotId) {  
+      const res = await getPlotById(plotId);
       setPlotItems(res);
-    setShowPlotItems(showPlotItems == plotId ? 0 : plotId);
+      showPlotItems.plot = plotId;
+    }
+    setShowPlotItems({
+      ...showPlotItems,
+      show: showPlotItems.show == plotId ? 0 : plotId
+    });
   }
 
   return (
@@ -94,13 +101,18 @@ const Dashboard = () => {
           <div className='flex flex-col space-y-2'>
             {story?.plot?.map(({id, category}: any) => (
               <div key={id}>
-                <div onClick={() => handleClickPlot(id)} className={plotStyle}>
-                  <p>
-                    {category}
-                  </p>
-                  <ChevronRightIcon className={showPlotItems == id ? 'w-5 rotate-90 transition translate-y-0.5' : 'w-5 transition'}/>
+                <div className={plotStyle}>
+                  <Link href={`/story/${storyId}/plot/${id}`}>
+                    <p className='cursor-pointer hover:text-blue-500'>
+                      {category}
+                    </p>
+                  </Link>
+                  <ChevronRightIcon 
+                    onClick={() => handleClickPlot(id)} 
+                    className={showPlotItems.show == id ? 'cursor-pointer w-5 rotate-90 transition translate-y-0.5' : 'cursor-pointer w-5 transition'}
+                  />
                 </div>
-                {showPlotItems == id && plotItems?.items?.map(({id, itemName, description}: any) => (
+                {showPlotItems.show == id && plotItems?.plot_items?.map(({id, itemName, description}: any) => (
                   <div key={id} className={plotItem}>
                     <p>{itemName}</p>
                     <p className='text-xs'>{description}</p>
