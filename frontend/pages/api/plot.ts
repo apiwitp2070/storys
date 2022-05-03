@@ -11,7 +11,7 @@ export async function getPlots () {
   }));
 };
 
-export const getPlotItemsById = async (plotId: any) => {
+export const getPlotById = async (plotId: any) => {
   const {
     data: {
       data,
@@ -19,10 +19,13 @@ export const getPlotItemsById = async (plotId: any) => {
   } = await axios.get(`${API_URL}/plots/${plotId}?populate=*`);
   return {
     id: data.id,
-    items: data.attributes.items.map(({ id, itemName, description }: any) => ({
+    category: data.attributes.category,
+    plot_items: data.attributes.plot_items.data.map(({ id, attributes }: any) => ({
       id,
-      itemName,
-      description
+      itemName: attributes.itemName,
+      description: attributes.description,
+      note: attributes.note,
+      detail: attributes.detail,
     })),
   };
 };
@@ -74,4 +77,19 @@ export const editPlot = async ({
       },
     }
   );
+};
+
+export const getPlotItemById = async (itemId: any) => {
+  const {
+    data: {
+      data,
+    },
+  } = await axios.get(`${API_URL}/plot-items/${itemId}?populate=*`);
+  return {
+    id: data.id,
+    itemName: data.attributes.itemName,
+    description: data.attributes.description,
+    note: data.attributes.note,
+    detail: data.attributes.detail,
+  };
 };
