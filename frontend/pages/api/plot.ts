@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { Attributes } from "react";
 
 const API_URL = "http://localhost:1337/api";
 
@@ -40,11 +41,7 @@ export const addPlot = async ({
     {
       data :{
         category,
-        story: {
-          date: {
-            id: storyId
-          }
-        },
+        story: storyId,
         createdBy: "",
         updatedBy: "",
       }
@@ -91,5 +88,38 @@ export const getPlotItemById = async (itemId: any) => {
     description: data.attributes.description,
     note: data.attributes.note,
     detail: data.attributes.detail,
+    tags: data.attributes.tags.data.map(({ id, attributes }: any) => ({
+      id: id,
+      tag: attributes.tag
+    })),
   };
+};
+
+export const addPlotItem = async ({
+  itemName,
+  description,
+  note,
+  detail,
+  plotId
+}: any) => {
+  const token = Cookies.get('token');
+  await axios.post(
+    `${API_URL}/plot-items`,
+    {
+      data :{
+        itemName,
+        description,
+        note,
+        detail,
+        plot: plotId,
+        createdBy: "",
+        updatedBy: "",
+      }
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 };
