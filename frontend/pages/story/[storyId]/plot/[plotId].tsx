@@ -72,6 +72,7 @@ const Dashboard = () => {
       detail: newValue.detail,
       plotId: plotId
     });
+    setShowModal(0);
     fetchDashboard();
   }
 
@@ -155,7 +156,7 @@ const Dashboard = () => {
               <input onChange={(e) => newValue.note = e.target.value} className={inputBox}></input>
               <p>Detail</p>
               <input onChange={(e) => newValue.detail = e.target.value} className={inputBox}></input>
-              <button onClick={() => handleAddPlotItem(plotId)}>Add New Item</button>
+              <button type='submit'>Add New Item</button>
             </form>
           </div>
         }
