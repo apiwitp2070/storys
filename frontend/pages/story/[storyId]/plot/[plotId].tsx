@@ -1,18 +1,17 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
-import { addPlotItem, editPlot, getPlotById, getPlotItemById } from '../../../api/plot';
+import { useEffect, useState } from 'react';
+import { addPlotItem, editPlot, editPlotItem, getPlotById, getPlotItemById } from '../../../api/plot';
 import Background from '../../../components/Background';
 import Header from '../../../components/Header'
 import Modal from '../../../components/Modal';
-import { ChevronRightIcon } from '@heroicons/react/solid';
 
-const divStyle = 'bg-white border shadow-md rounded-md';
-const divHeader = 'my-2 px-4 py-4 flex justify-between font-semibold';
-const plotStyle = 'select-none cursor-pointer flex justify-between items-center border-b border-gray-300 px-4 py-2 transition hover:border-blue-500';
-const plotItem = 'select-none border border-gray-200 rounded m-2 px-4 py-2';
+const divStyle = 'p-4 bg-white border shadow-md rounded-md';
+const divHeader = 'my-2 flex justify-between font-semibold';
+const plotItem = 'select-none border border-gray-200 rounded mt-2 px-4 py-2 hover:text-blue-500 hover:border-blue-500';
+const itemSection = 'text-xs mt-3';
 const editButton = 'hover:text-blue-500 transition duration-300';
-const inputBox = 'border-b border-gray-400 focus:outline-none';
+const inputBox = 'mb-4 py-1 border-b border-gray-400 focus:outline-none focus:border-blue-500';
 
 const Dashboard = () => {
   const router = useRouter();
@@ -41,6 +40,7 @@ const Dashboard = () => {
     e.preventDefault();
     if (modal == 1) handleEditPlot(plotId);
     else if (modal == 3) handleAddPlotItem(plotId);
+    else if (modal == 4) handleEditPlotItem(item.id);
   }
 
   const handleEditPlot = async (plotId: any) => {
@@ -57,7 +57,6 @@ const Dashboard = () => {
       const res = await getPlotItemById(itemId);
       setItem(res);
       setShowModal(2);
-      fetchDashboard();
     }
     else {
       setShowModal(modal == 0 ? 2 : 0);
@@ -71,6 +70,18 @@ const Dashboard = () => {
       note: newValue.note,
       detail: newValue.detail,
       plotId: plotId
+    });
+    setShowModal(0);
+    fetchDashboard();
+  }
+
+  const handleEditPlotItem = async (itemId: any) => {
+    await editPlotItem({
+      itemId: itemId,
+      itemName: newValue.itemName ? newValue.itemName: item.itemName,
+      description: newValue.description ? newValue.description : item.description,
+      note: newValue.note ? newValue.note : item.note,
+      detail: newValue.detail ? newValue.detail : item.detail,
     });
     setShowModal(0);
     fetchDashboard();
@@ -113,7 +124,7 @@ const Dashboard = () => {
             <p className='uppercase'>Items</p>
             <button className={editButton} onClick={() => setShowModal(3)}>New</button>
           </div>
-          <div className='flex flex-col space-y-2'>
+          <div className='flex flex-col space-y-2 h-96 overflow-auto'>
             {plot?.plot_items?.map(({id, itemName, description}: any) => (
               <div key={id} className={plotItem} onClick={() => handleSelectItem(id)}>
                 <p>{itemName}</p>
@@ -127,18 +138,32 @@ const Dashboard = () => {
           <div className={divHeader}>
             <p className='uppercase'>ITEM DETAIL</p>
           </div>
-          {modal == 2 && 
-            <>
-              <span className='flex flex-row space-x-4'>
+          {modal == 2 ? 
+            <div className='h-96 overflow-auto'>
+              <span className='mt-2 flex flex-row space-x-2'>
                 {item.tags.map(({ id, tag }: any) => (
-                  <p key={id}>{tag}</p>
+                  <p key={id} className='px-2 border border-black rounded-full'>{tag}</p>
                 ))}
               </span>
-              <p>{item.itemName}</p>
-              <p>{item.description}</p>
-              <p>{item.note}</p>
-              <p>{item.detail}</p>
-            </>
+              <div className='flex flex-col mt-4'>
+                <p className={itemSection}>Name</p>
+                <p>{item.itemName ? item.itemName : '-'}</p>
+                <p className={itemSection}>Description</p>
+                <p>{item.description ? item.description : '-'}</p>
+                <p className={itemSection}>Note</p>
+                <p>{item.note ? item.note : '-'}</p>
+                <p className={itemSection}>Detail</p>
+                <p>{item.detail ? item.detail : '-'}</p>
+                <button 
+                  className='mt-8 py-1 border border-black rounded-md hover:border-blue-500 hover:text-blue-500' 
+                  onClick={() => setShowModal(4)}
+                >
+                  Edit Item Detail
+                </button>
+              </div>
+            </div>
+          :
+            <p className='mt-4 text-gray-500'>Item details will be shown here</p>
           }
         </div>
 
@@ -147,16 +172,45 @@ const Dashboard = () => {
             <div className={divHeader}>
               <p className='uppercase'>NEW ITEM</p>
             </div>
-            <form onSubmit={(e) => handleFormSubmit(e)}>
-              <p>Item Name</p>
+            <form className='flex flex-col' onSubmit={(e) => handleFormSubmit(e)}>
+              <p className={itemSection}>Item Name</p>
               <input onChange={(e) => newValue.itemName = e.target.value} className={inputBox}></input>
-              <p>Description</p>
+              <p className={itemSection}>Description</p>
               <input onChange={(e) => newValue.description = e.target.value} className={inputBox}></input>
-              <p>Note</p>
+              <p className={itemSection}>Note</p>
               <input onChange={(e) => newValue.note = e.target.value} className={inputBox}></input>
-              <p>Detail</p>
+              <p className={itemSection}>Detail</p>
               <input onChange={(e) => newValue.detail = e.target.value} className={inputBox}></input>
-              <button type='submit'>Add New Item</button>
+              <button 
+                className='mt-8 py-1 border border-black rounded-md hover:border-blue-500 hover:text-blue-500' 
+                type='submit'
+              >
+                Add New Item
+              </button>
+            </form>
+          </div>
+        }
+
+        {modal == 4 &&
+          <div className={divStyle}>
+            <div className={divHeader}>
+              <p className='uppercase'>EDIT ITEM</p>
+            </div>
+            <form className='flex flex-col' onSubmit={(e) => handleFormSubmit(e)}>
+              <p className={itemSection}>Item Name</p>
+              <input defaultValue={item.itemName} onChange={(e) => newValue.itemName = e.target.value} className={inputBox}></input>
+              <p className={itemSection}>Description</p>
+              <input defaultValue={item.description} onChange={(e) => newValue.description = e.target.value} className={inputBox}></input>
+              <p className={itemSection}>Note</p>
+              <input defaultValue={item.note} onChange={(e) => newValue.note = e.target.value} className={inputBox}></input>
+              <p className={itemSection}>Detail</p>
+              <input defaultValue={item.detail} onChange={(e) => newValue.detail = e.target.value} className={inputBox}></input>
+              <button 
+                className='mt-8 py-1 border border-black rounded-md hover:border-blue-500 hover:text-blue-500' 
+                type='submit'
+              >
+                Update Item Details
+              </button>
             </form>
           </div>
         }

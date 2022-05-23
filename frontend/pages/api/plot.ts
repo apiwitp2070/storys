@@ -1,6 +1,5 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { Attributes } from "react";
 
 const API_URL = "http://localhost:1337/api";
 
@@ -112,6 +111,34 @@ export const addPlotItem = async ({
         note,
         detail,
         plot: plotId,
+        createdBy: "",
+        updatedBy: "",
+      }
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+export const editPlotItem = async ({
+  itemName,
+  description,
+  note,
+  detail,
+  itemId
+}: any) => {
+  const token = Cookies.get('token');
+  await axios.put(
+    `${API_URL}/plot-items/${itemId}`,
+    {
+      data :{
+        itemName,
+        description,
+        note,
+        detail,
         createdBy: "",
         updatedBy: "",
       }
