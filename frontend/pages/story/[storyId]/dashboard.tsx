@@ -102,7 +102,7 @@ const Dashboard = () => {
               New
             </button>
           </div>
-          <div className="flex flex-col space-y-2 max-h-96 overflow-y-auto">
+          <div className="flex flex-col space-y-2 h-112 overflow-y-auto">
             {story?.plot?.map(({ id, category }: any) => (
               <div key={id}>
                 <div className={plotStyle}>
@@ -121,7 +121,7 @@ const Dashboard = () => {
                   />
                 </div>
                 {showPlotItems.show == id && (
-                  <div className="max-h-96 overflow-y-auto">
+                  <div className="max-h-112 overflow-y-auto">
                     {showPlotItems.show == id &&
                       plotItems?.plot_items?.map(
                         ({ id, itemName, description }: any) => (

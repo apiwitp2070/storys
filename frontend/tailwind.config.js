@@ -5,7 +5,12 @@ module.exports = {
     './providers/ts/bg-gen.ts',
   ],
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        '112': '28rem',
+        '128': '32rem',
+      }
+    },
   },
   plugins: [],
 }
