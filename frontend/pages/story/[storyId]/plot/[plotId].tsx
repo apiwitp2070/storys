@@ -8,6 +8,7 @@ import {
   getPlotById,
   getPlotItemById,
 } from '../../../api/plot'
+import { getTags } from '../../../api/tag'
 import Background from '../../../components/Background'
 import Header from '../../../components/Header'
 import Modal from '../../../components/Modal'
@@ -27,23 +28,30 @@ const Dashboard = () => {
   const [modal, setShowModal] = useState(0)
   const [newName, setNewName] = useState('')
   const [plot, setPlot] = useState<any>()
-  const [newValue, setNewValue] = useState({
+  const [tags, setTags] = useState([{ id: 0, tag: '' }])
+  const [filteredTags, setFilteredTags] = useState([{ id: 0, tag: '' }])
+  const newValue = {
     itemName: '',
     description: '',
     detail: '',
     note: '',
-    tags: [],
-  })
+    tags: [{ id: 0, tag: '' }],
+  }
   const [item, setItem] = useState({
     id: 0,
     itemName: '',
     description: '',
-    detail: '',
+    detail: [''],
     note: '',
-    tags: [],
+    tags: [{ id: 0, tag: '' }],
   })
 
   const { plotId } = router.query
+
+  useEffect(() => {
+    fetchDashboard()
+    fetchTags()
+  }, [router.query])
 
   async function fetchDashboard() {
     if (Object.keys(router.query).length == 0) return
@@ -51,9 +59,11 @@ const Dashboard = () => {
     setPlot(res)
   }
 
-  useEffect(() => {
-    fetchDashboard()
-  }, [router.query])
+  async function fetchTags() {
+    if (Object.keys(router.query).length == 0) return
+    const res = await getTags()
+    setTags(res)
+  }
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -79,6 +89,16 @@ const Dashboard = () => {
     } else {
       setShowModal(modal == 0 ? 2 : 0)
     }
+  }
+
+  const handleSelectEditItem = () => {
+    setShowModal(4)
+    handleSetTags()
+  }
+
+  const handleSetTags = () => {
+    const newTagsArr = tags.filter((i) => !item.tags.find((f) => f.id === i.id))
+    setFilteredTags(newTagsArr)
   }
 
   const handleAddPlotItem = async (plotId: any) => {
@@ -185,7 +205,7 @@ const Dashboard = () => {
                 <p>{item.detail ? item.detail : '-'}</p>
                 <button
                   className="mt-8 py-1 border border-black rounded-md hover:border-blue-500 hover:text-blue-500"
-                  onClick={() => setShowModal(4)}
+                  onClick={() => handleSelectEditItem()}
                 >
                   Edit Item Detail
                 </button>
@@ -243,7 +263,7 @@ const Dashboard = () => {
               <p className="uppercase">EDIT ITEM</p>
             </div>
             <form
-              className="flex flex-col"
+              className="h-112 flex flex-col overflow-auto"
               onSubmit={(e) => handleFormSubmit(e)}
             >
               <p className={itemSection}>Item Name</p>
@@ -270,6 +290,30 @@ const Dashboard = () => {
                 onChange={(e) => (newValue.detail = e.target.value)}
                 className={inputBox}
               ></input>
+              <div>
+                <p>Current Tags</p>
+                <span className="mt-2 flex flex-row space-x-2">
+                  {item.tags.map(({ id, tag }: any) => (
+                    <p
+                      key={id}
+                      className="px-2 border border-black rounded-full"
+                    >
+                      {tag}
+                    </p>
+                  ))}
+                </span>
+                <p>Add Tags</p>
+                <span className="mt-2 flex flex-row space-x-2">
+                  {filteredTags.map(({ id, tag }: any) => (
+                    <p
+                      key={id}
+                      className="px-2 border border-black rounded-full"
+                    >
+                      {tag}
+                    </p>
+                  ))}
+                </span>
+              </div>
               <button
                 className="mt-8 py-1 border border-black rounded-md hover:border-blue-500 hover:text-blue-500"
                 type="submit"

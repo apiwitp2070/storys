@@ -26,15 +26,15 @@ const Dashboard = () => {
 
   const { storyId } = router.query
 
+  useEffect(() => {
+    fetchDashboard()
+  }, [router.query])
+
   async function fetchDashboard() {
     if (Object.keys(router.query).length == 0) return
     const res = await getStoryById(storyId)
     setStory(res)
   }
-
-  useEffect(() => {
-    fetchDashboard()
-  }, [router.query])
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
