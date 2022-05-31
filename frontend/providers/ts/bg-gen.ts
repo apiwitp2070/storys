@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import BG from './globalVar';
+import { useEffect } from 'react'
+import BG from './globalVar'
 
 export const BgList = [
   'bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400',
@@ -20,9 +20,8 @@ export const BgList = [
 
 export const handleChangeBg = () => {
   if (BG.color < 11) {
-    BG.color += 1;
-  }
-  else {
-    BG.color = 0;
+    BG.color += 1
+  } else {
+    BG.color = 0
   }
 }

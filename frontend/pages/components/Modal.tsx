@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export default function Modal({
   setShowModal,
@@ -8,8 +8,8 @@ export default function Modal({
 }: any) {
   const handleClickConfirm = () => {
     // setShowModal(false);
-    onConfirm();
-  };
+    onConfirm()
+  }
   return (
     <>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -52,5 +52,5 @@ export default function Modal({
       </div>
       <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
     </>
-  );
+  )
 }

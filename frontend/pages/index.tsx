@@ -1,9 +1,10 @@
 import Head from 'next/head'
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import Background from './components/Background';
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import Background from './components/Background'
 
-const ButtonStyle = "p-1 border border-black bg-white rounded w-3/5 mx-auto transition ease-out duration-300 hover:border-blue-600 hover:text-blue-600"
+const ButtonStyle =
+  'p-1 border border-black bg-white rounded w-3/5 mx-auto transition ease-out duration-300 hover:border-blue-600 hover:text-blue-600'
 
 const Homepage = () => {
   return (
@@ -13,23 +14,21 @@ const Homepage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Background/>
+      <Background />
 
       <main>
-        <div className='flex flex-col mt-48 py-12 w-4/5 md:w-2/5 mx-auto space-y-12 border rounded-md bg-white'>
-          <h1 className='text-4xl font-light text-center'>Storys</h1>
-          <Link href='/auth/login'>
+        <div className="flex flex-col mt-48 py-12 w-4/5 md:w-2/5 mx-auto space-y-12 border rounded-md bg-white">
+          <h1 className="text-4xl font-light text-center">Storys</h1>
+          <Link href="/auth/login">
             <button className={ButtonStyle}>Login</button>
           </Link>
-          <Link href='/auth/register'>
+          <Link href="/auth/register">
             <button className={ButtonStyle}>Regis</button>
           </Link>
         </div>
       </main>
 
-      <footer>
-
-      </footer>
+      <footer></footer>
     </div>
   )
 }

@@ -1,3 +1,3 @@
 export default {
-  color: 0
-};
+  color: 0,
+}
