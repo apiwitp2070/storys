@@ -165,7 +165,10 @@ const Dashboard = () => {
               New
             </button>
           </div>
-          <div className="flex flex-col space-y-2 h-112 overflow-auto">
+          <div
+            style={{ height: '65vh' }}
+            className="flex flex-col space-y-2 overflow-auto"
+          >
             {plot?.plot_items
               ?.sort((a: any, b: any) => a.id - b.id)
               .map(({ id, itemName, description }: any) => (
@@ -186,7 +189,7 @@ const Dashboard = () => {
             <p className="uppercase">ITEM DETAIL</p>
           </div>
           {modal == 2 ? (
-            <div className="h-112 overflow-auto">
+            <div style={{ height: '65vh' }} className="overflow-auto">
               <span className="mt-2 flex flex-row space-x-2">
                 {item.tags.map(({ id, tag }: any) => (
                   <p key={id} className="px-2 border border-black rounded-full">
@@ -263,7 +266,8 @@ const Dashboard = () => {
               <p className="uppercase">EDIT ITEM</p>
             </div>
             <form
-              className="h-112 flex flex-col overflow-auto"
+              style={{ height: '65vh' }}
+              className="flex flex-col overflow-auto"
               onSubmit={(e) => handleFormSubmit(e)}
             >
               <p className={itemSection}>Item Name</p>
